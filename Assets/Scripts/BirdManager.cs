@@ -11,7 +11,6 @@ public class BirdManager : MonoBehaviour
     public float velocity = 1f;
     public GameManager gameManager;
     private Rigidbody2D rb2D;
-
     public GameObject DeathScreen;
 
     // Start is called before the first frame update
@@ -24,7 +23,7 @@ public class BirdManager : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (Input.GetKey("space"))
+        if (Input.GetKey("space") || Input.GetMouseButtonDown(0))
         {
             rb2D.velocity = Vector2.up * velocity;
         }
@@ -50,6 +49,7 @@ public class BirdManager : MonoBehaviour
             isDead = true;
             Time.timeScale = 0;
             DeathScreen.SetActive(true);
+            gameManager.PlayScreen.SetActive(false);
         }
     }
 

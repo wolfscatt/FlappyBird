@@ -9,13 +9,16 @@ public class GameManager : MonoBehaviour
 {
     public int score;
     public GameObject PauseScreen;
+    public GameObject FirstScreen;
+    public GameObject PlayScreen;
     public Text scoreText;
+    public const string BestScoreKey = "BestScore";
     // Start is called before the first frame update
     void Start()
     {
         score = 0;
         scoreText.text = score.ToString();
-         
+        Time.timeScale = 0;
     }
 
     // Update is called once per frame
@@ -24,6 +27,14 @@ public class GameManager : MonoBehaviour
         
     }
 
+    public void OnDestroy()
+    {
+        int currentBestScore = PlayerPrefs.GetInt(BestScoreKey, 0);
+        if (score>currentBestScore)
+        {
+            PlayerPrefs.SetInt(BestScoreKey, score);
+        }
+    }
     public void ScoreUpdate()
     {
         score++;
@@ -33,6 +44,12 @@ public class GameManager : MonoBehaviour
     public void RestartGame()
     {
         SceneManager.LoadScene(0);
+    }
+
+    public void FirstScreenPlay()
+    {
+        FirstScreen.SetActive(false);
+        Time.timeScale = 1;
     }
 
     public void PauseGame()
@@ -45,5 +62,6 @@ public class GameManager : MonoBehaviour
     {
         PauseScreen.SetActive(false);
         Time.timeScale = 1;
+        
     }
 }
